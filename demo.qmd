@@ -1,5 +1,5 @@
 ---
-title: "demo"
+title: "my_penguins"
 ---
 
 ## Quarto
@@ -7,5 +7,42 @@ title: "demo"
 Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
 
 ```{r}
-1 + 1
+library(tidyverse)
+install.packages("palmerpenguins")
+library(palmerpenguins)
+
+
+```
+
+```{r}
+penguins <- palmerpenguins::penguins
+penguins |>
+  group_by(species) |>
+  summarize(
+    mean_mass = mean(body_mass_g, na.rm = TRUE),
+    count = n()
+    )
+
+
+
+```
+```{r}
+
+ggplot(
+  data = penguins,
+  mapping = aes(y = body_mass_g, x = bill_length_mm)
+) +
+  geom_point(
+    mapping = aes(color = species)
+  ) +
+  labs(
+    title = "Body Mass vs. Bill Length",
+    x = "Body Mass (g)",
+    y = "Bill Length (mm)",
+    color = "Species"
+  ) +
+  theme_classic()
+
+  
+
 ```
